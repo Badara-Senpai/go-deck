@@ -2,6 +2,7 @@ package deck
 
 import (
 	"fmt"
+	"math/rand"
 	"testing"
 )
 
@@ -43,6 +44,27 @@ func TestSort(t *testing.T) {
 
 	if cards[0] != expectedCard {
 		t.Error("Expected Ace of Spades as first card. Received: ", cards[0])
+	}
+}
+
+func TestShuffle(t *testing.T) {
+	// on Go Playground, rand.NewSource(0) will give a specific result (lol that's why we used timestamps there to get different values)
+	// First call of shuffleRand.Perm(52) should be: [40, 35, ...]
+	// Lets use that
+
+	shuffleRand = rand.New(rand.NewSource(0))
+
+	originalDeck := New()
+	firstCard := originalDeck[40]
+	secondCard := originalDeck[35]
+	cards := New(Shuffle)
+
+	if cards[0] != firstCard {
+		t.Errorf("Expected the first card to be %s, received %s.", firstCard, cards[0])
+	}
+
+	if cards[1] != secondCard {
+		t.Errorf("Expected the first card to be %s, received %s.", secondCard, cards[1])
 	}
 }
 
